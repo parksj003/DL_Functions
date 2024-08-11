@@ -1,3 +1,6 @@
+from torch import nn
+from torch.utils.data import Dataset
+
 # Note [-1 : 1] -> nn.Tanh
 class Autoencoder(nn.Module):
     def __init__(self):
