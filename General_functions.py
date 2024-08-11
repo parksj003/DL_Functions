@@ -41,31 +41,37 @@ def print_dataloader_summary(dataloader):
     num_batches = len(dataloader)
     dataset_size = len(dataloader.dataset)
     batch_size = dataloader.batch_size
+    
     print(f"Dataset size: {dataset_size}")
     print(f"Number of batches: {num_batches}")
-    print(f"Batch size: {batch_size}")
+    print(f"Batch size: {batch_size}\n")
     
-    # 첫 번째 배치의 정보를 출력
+    # 첫 번째 배치의 정보를 출력하고 해당 배치 데이터를 반환
     for batch_idx, (batch_data, batch_labels) in enumerate(dataloader):
-        print(f"Batch {batch_idx + 1}/{num_batches}")
-        print(f"  Data shape: {batch_data.shape}")
-        print(f"  Labels shape: {batch_labels.shape}")
-        print(f"  Data type: {batch_data.dtype}")
-        print(f"  Labels type: {batch_labels.dtype}")
+        print(f"Batch {batch_idx + 1}/{num_batches} Summary")
         
-        # 통계 정보 계산 및 출력
-        batch_data_mean = batch_data.mean().item()
-        batch_data_std = batch_data.std().item()
-        print(f"  Data mean: {batch_data_mean:.2f}")
-        print(f"  Data std: {batch_data_std:.2f}")
+        # 데이터 정보 출력
+        print("  [Data]")
+        print(f"    Data shape: {batch_data.shape}")
+        print(f"    Data type: {batch_data.dtype}")
+        print(f"    Data mean: {batch_data.mean().item():.2f}")
+        print(f"    Data std: {batch_data.std().item():.2f}")
+        print(f"    Data min: {batch_data.min().item():.2f}")
+        print(f"    Data max: {batch_data.max().item():.2f}\n")
         
-        batch_labels_mean = batch_labels.mean().item()
-        batch_labels_std = batch_labels.std().item()
-        print(f"  Label mean: {batch_labels_mean:.2f}")
-        print(f"  Label std: {batch_labels_std:.2f}")
+        # 라벨 정보 출력
+        print("  [Labels]")
+        print(f"    Labels shape: {batch_labels.shape}")
+        print(f"    Labels type: {batch_labels.dtype}")
+        print(f"    Label mean: {batch_labels.mean().item():.2f}")
+        print(f"    Label std: {batch_labels.std().item():.2f}")
+        print(f"    Label min: {batch_labels.min().item():.2f}")
+        print(f"    Label max: {batch_labels.max().item():.2f}\n")
         
-        # 배치 하나만 요약하기 위해 break
-        break
+        # 첫 번째 배치를 반환
+        return batch_data, batch_labels
+
+# batch_example = print_dataloader_summary(dataloader_train)
         
 def smoothObject(obj, iter):
     obj_tensor = torch.Tensor(obj).unsqueeze(0)
