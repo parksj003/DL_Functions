@@ -87,7 +87,7 @@ def smoothObject(obj, iter):
 def GPU_summary():
     import torch
 
-    print("===================================================")
+    print("\n===================================================")
     if torch.cuda.is_available():
 
         print(f"사용 가능한 GPU 개수: {torch.cuda.device_count()}")
