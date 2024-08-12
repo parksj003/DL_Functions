@@ -54,8 +54,9 @@ def print_dataloader_summary(dataloader):
         print("  [Data]")
         print(f"    Data shape: {batch_data.shape}")
         print(f"    Data type: {batch_data.dtype}")
-        print(f"    Data mean: {batch_data.mean().item():.2f}")
-        print(f"    Data std: {batch_data.std().item():.2f}")
+        if batch_data.dtype == torch.float32:
+            print(f"    Data mean: {batch_data.mean().item():.2f}")
+            print(f"    Data std: {batch_data.std().item():.2f}")
         print(f"    Data min: {batch_data.min().item():.2f}")
         print(f"    Data max: {batch_data.max().item():.2f}\n")
         
@@ -63,8 +64,9 @@ def print_dataloader_summary(dataloader):
         print("  [Labels]")
         print(f"    Labels shape: {batch_labels.shape}")
         print(f"    Labels type: {batch_labels.dtype}")
-        print(f"    Label mean: {batch_labels.mean().item():.2f}")
-        print(f"    Label std: {batch_labels.std().item():.2f}")
+        if batch_labels.dtype == torch.float32:
+            print(f"    Label mean: {batch_labels.mean().item():.2f}")
+            print(f"    Label std: {batch_labels.std().item():.2f}")
         print(f"    Label min: {batch_labels.min().item():.2f}")
         print(f"    Label max: {batch_labels.max().item():.2f}\n")
         
