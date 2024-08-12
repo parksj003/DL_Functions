@@ -10,6 +10,7 @@ import torch.nn.functional as nnF  # nnF로 변경
 # # SSIM 손실 계산
 # loss = ssim_loss(img1, img2)
 # print(f"SSIM Loss: {loss.item()}")
+/
 
 class SSIMLoss(nn.Module):
     def __init__(self, window_size=11, size_average=True, channel=1):
