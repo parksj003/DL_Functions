@@ -38,6 +38,15 @@ def montage(images, grid_shape=None):
     return montage_image
 
 def print_dataloader_summary(dataloader):
+    
+    def print_channel_stats(data, name=""):
+        for c in range(data.size(1)):
+            channel_data = data[:, c, :, :]
+            print(f"    {name} Channel {c}: std = {channel_data.std().item():.2f}, "
+                f"min = {channel_data.min().item():.2f}, "
+                f"max = {channel_data.max().item():.2f}")
+        print()  # 줄바꿈
+        
     num_batches = len(dataloader)
     dataset_size = len(dataloader.dataset)
     batch_size = dataloader.batch_size
@@ -60,6 +69,10 @@ def print_dataloader_summary(dataloader):
         print(f"    Data min: {batch_data.min().item():.2f}")
         print(f"    Data max: {batch_data.max().item():.2f}\n")
         
+        # 채널별 통계 출력 (ndim == 4인 경우)
+        if batch_data.ndim == 4:  # assuming [B, C, H, W] format
+            print_channel_stats(batch_data, "Data")
+            
         # 라벨 정보 출력
         print("  [Labels]")
         print(f"    Labels shape: {batch_labels.shape}")
@@ -69,6 +82,10 @@ def print_dataloader_summary(dataloader):
             print(f"    Label std: {batch_labels.std().item():.2f}")
         print(f"    Label min: {batch_labels.min().item():.2f}")
         print(f"    Label max: {batch_labels.max().item():.2f}\n")
+            
+        # 채널별 통계 출력 (ndim == 4인 경우)
+        if batch_labels.ndim == 4:  # assuming [B, C, H, W] format
+            print_channel_stats(batch_labels, "Labels")
         
         # 첫 번째 배치를 반환
         return batch_data, batch_labels
