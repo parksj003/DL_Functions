@@ -1,5 +1,5 @@
 import torch.nn.functional as nnF  # nnF로 변경
-
+import torch.nn as nn
 # # 모델 생성
 # ssim_loss = SSIMLoss()
 
