@@ -153,4 +153,26 @@ def GPU_summary():
         print("CUDA GPU를 사용할 수 없습니다.")
     # GPU 메모리 정리
     
-
+def LP_layer_batch(phase_batch, wavelength, gaussian_width, z, size, N):
+# 예시 데이터 (배치 크기 8, 채널 1, 256x256 이미지)
+# wavelength=632.8*LP.nm; #wavelength of the HeNe laser used
+# gaussian_width = 2*LP.mm
+# z = 2*LP.m 
+# size=20*LP.mm; #The CCD-sensor has an area of size x size (NB LightPipes needs square grids!)
+# N = 256 #CCD pixels
+    F_init = LP.Begin(size, wavelength, N)
+    F_init = LP.GaussAperture(gaussian_width, 0, 0, 1, F_init)
+    processed_images = []
+    for phase in phase_batch:
+        # 각 배치에 대해 LP 연산 수행
+        phase = phase[0].detach().cpu()
+        F = LP.SubPhase(F_init, phase)
+        F = LP.Lens(z, F)
+        F = LP.Forvard(z, F)  # Propagate to the far field
+        I = LP.Intensity(F)
+        processed_image = torch.from_numpy(I).to(torch.float32).to(DEVICE)
+        processed_images.append(processed_image)
+    
+    # 처리된 이미지를 다시 하나의 텐서로 합침
+    return torch.stack(processed_images).unsqueeze(1)
+#beam_recon = LP_layer_batch(recon,wavelength, gaussian_width, z, size, N)
