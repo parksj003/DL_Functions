@@ -168,10 +168,10 @@ def LP_layer_batch(phase_batch, wavelength, gaussian_width, z, size, N):
     for phase in phase_batch:
         # 각 배치에 대해 LP 연산 수행
         phase = phase[0].detach().cpu()
-        F = LP.SubPhase(F_init, phase)
-        F = LP.Lens(z, F)
-        F = LP.Forvard(z, F)  # Propagate to the far field
-        I = LP.Intensity(F)
+        F_out = LP.SubPhase(F_init, phase)
+        F_out = LP.Lens(z, F_out)
+        F_out = LP.Forvard(z, F_out)  # Propagate to the far field
+        I = LP.Intensity(F_out)
         processed_image = torch.from_numpy(I).to(torch.float32).to(DEVICE)
         processed_images.append(processed_image)
     
