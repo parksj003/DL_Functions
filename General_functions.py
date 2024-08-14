@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import LightPipes as LP
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def montage(images, grid_shape=None):
     """
