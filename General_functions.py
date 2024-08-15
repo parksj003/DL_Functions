@@ -178,3 +178,6 @@ def LP_layer_batch(phase_batch, wavelength, gaussian_width, z, size, N):
     # 처리된 이미지를 다시 하나의 텐서로 합침
     return torch.stack(processed_images).unsqueeze(1)
 #beam_recon = LP_layer_batch(recon,wavelength, gaussian_width, z, size, N)
+
+def restore_image(batch_image, mean, std):
+        return batch_image* std.view(1, -1, 1, 1) + mean.view(1, -1, 1, 1) 
