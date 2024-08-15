@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import LightPipes as LP
+import gc
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def montage(images, grid_shape=None):
@@ -181,3 +182,10 @@ def LP_layer_batch(phase_batch, wavelength, gaussian_width, z, size, N):
 
 def restore_image(batch_image, mean, std):
         return batch_image* std.view(1, -1, 1, 1) + mean.view(1, -1, 1, 1) 
+
+
+def del_GPUmodel(model):
+    del model
+    gc.collect() 
+    torch.cuda.empty_cache()
+del_GPUmodel(model)
