@@ -188,4 +188,5 @@ def delete_model(gabage_model):
     del gabage_model
     gc.collect() 
     torch.cuda.empty_cache()
+    print(f"str{gabage_model} is removed from GPU!")
 
