@@ -185,8 +185,8 @@ def restore_image(batch_image, mean, std):
 
 
 def delete_model(gabage_model):
+    print(f"str{gabage_model} is removed from GPU!")
     del gabage_model
     gc.collect() 
     torch.cuda.empty_cache()
-    print(f"str{gabage_model} is removed from GPU!")
 
