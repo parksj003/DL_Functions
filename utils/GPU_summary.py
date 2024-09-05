@@ -1,3 +1,5 @@
+import torch 
+
 def GPU_summary():
     import torch
 
