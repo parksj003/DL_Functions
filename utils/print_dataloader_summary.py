@@ -1,3 +1,5 @@
+import torch
+
 def print_dataloader_summary(dataloader):
     
     def get_channel_stats(data):
